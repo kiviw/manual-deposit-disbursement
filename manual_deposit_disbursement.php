@@ -50,58 +50,60 @@ function manual_deposit_form_shortcode() {
     $deposit_address = '0xbe5d9b4f0b61ed76bbfa821ea465e0c4179f0684'; // Replace this with the actual deposit address
 
     if (isset($_POST['submit_deposit'])) {
-        process_deposit_submission();
+        if (isset($_POST['manual_deposit_nonce']) && wp_verify_nonce($_POST['manual_deposit_nonce'], 'manual_deposit_nonce')) {
+            process_deposit_submission();
+        }
     }
     ?>
     <style>
         .manual-deposit-form {
-            max-width: 500px;
+            max-width: 600px;
             margin: 0 auto;
             padding: 20px;
             border: 1px solid #ccc;
+            border-radius: 5px;
         }
-
         .manual-deposit-form label {
             display: block;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
+            font-weight: bold;
         }
-
         .manual-deposit-form input[type="number"],
-        .manual-deposit-form input[type="text"] {
+        .manual-deposit-form input[type="text"],
+        .manual-deposit-form input[type="submit"] {
             width: 100%;
             padding: 10px;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            box-sizing: border-box;
         }
-
-        .manual-deposit-form .deposit-address {
-            font-size: 14px;
-            background-color: #f9f9f9;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            word-wrap: break-word;
-            margin-bottom: 20px;
-        }
-
         .manual-deposit-form input[type="submit"] {
-            background-color: #4CAF50;
+            background-color: #0073aa;
             color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
             cursor: pointer;
         }
-
-        .manual-deposit-form input[type="submit"]:hover {
-            background-color: #45a049;
+        .manual-deposit-form table {
+            width: 100%;
+            border-collapse: collapse;
         }
-
-        @media (max-width: 768px) {
+        .manual-deposit-form table th,
+        .manual-deposit-form table td {
+            padding: 8px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+        @media screen and (max-width: 600px) {
             .manual-deposit-form {
-                max-width: 100%;
+                padding: 10px;
+            }
+            .manual-deposit-form input[type="number"],
+            .manual-deposit-form input[type="text"],
+            .manual-deposit-form input[type="submit"] {
+                padding: 5px;
+            }
+            .manual-deposit-form table th,
+            .manual-deposit-form table td {
+                padding: 5px;
             }
         }
     </style>
@@ -110,6 +112,7 @@ function manual_deposit_form_shortcode() {
         <div class="deposit-address"><?php echo $deposit_address; ?></div>
 
         <form method="post">
+            <?php wp_nonce_field('manual_deposit_nonce'); ?>
             <label for="amount_in_wld">Amount in WLD Sent:</label>
             <input type="number" id="amount_in_wld" name="amount_in_wld" min="0" step="1" required />
 
