@@ -53,6 +53,58 @@ function manual_deposit_form_shortcode() {
         process_deposit_submission();
     }
     ?>
+    <style>
+        .manual-deposit-form {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+        }
+
+        .manual-deposit-form label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .manual-deposit-form input[type="number"],
+        .manual-deposit-form input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .manual-deposit-form .deposit-address {
+            font-size: 14px;
+            background-color: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            word-wrap: break-word;
+            margin-bottom: 20px;
+        }
+
+        .manual-deposit-form input[type="submit"] {
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .manual-deposit-form input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        @media (max-width: 768px) {
+            .manual-deposit-form {
+                max-width: 100%;
+            }
+        }
+    </style>
     <div class="manual-deposit-form">
         <p>Copy the WLD deposit address below and use it to send your WLD from an external wallet:</p>
         <div class="deposit-address"><?php echo $deposit_address; ?></div>
